@@ -1,0 +1,6 @@
+.flex {
+  display: flex;
+  flex-direction: column;
+  margin: 24px auto 0 0;
+  width: 350px;
+}

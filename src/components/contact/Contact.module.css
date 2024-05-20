@@ -1,0 +1,16 @@
+.icon {
+  margin-right: 8px;
+  width: 22px;
+  height: 22px;
+}
+
+
+.contactData {
+  flex-grow: 1;
+}
+
+.button {
+  width: 80px;
+  height: 40px;
+  flex-shrink: 0;
+}
