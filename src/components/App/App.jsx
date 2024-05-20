@@ -4,8 +4,8 @@ import ContactList from "../contactList/ContactList";
 import css from "./App.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectContactsState } from "../../redux/selectors";
-import { fetchContacts } from "../../redux/contactsOps";
+import { selectContactsState } from "../../redux/contacts/contactSelectors";
+import { fetchContacts } from "../../redux/contacts/contactsOps";
 
 const App = () => {
   const { item, isLoading, error } = useSelector(selectContactsState);
