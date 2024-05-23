@@ -1,8 +1,8 @@
-import Navigation from "../Navigation/Navigation";
+import AppBar from "../AppBar/AppBar";
 export default function Layout({ children }) {
   return (
     <>
-      <Navigation />
+      <AppBar />
       {children}
     </>
   );
