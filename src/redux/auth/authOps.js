@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 axios.defaults.baseURL = "https://connections-api.herokuapp.com/";
 
-export const register = createAsyncThunk(
+export const registerNewUser = createAsyncThunk(
   "auth/register",
   async (newUser, thunkAPI) => {
     try {
@@ -14,3 +14,17 @@ export const register = createAsyncThunk(
     }
   }
 );
+
+
+
+// Mari
+// marimari@GiMailShirt.com
+//12345678
+
+
+// Noname
+// Noname@mail.com
+// 123456789
+
+// newuser
+// la

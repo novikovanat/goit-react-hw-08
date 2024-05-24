@@ -4,17 +4,19 @@ import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import css from "./RegistrationForm.module.css";
 import Button from "../Button/Button";
+import { registerNewUser } from "../../redux/auth/authOps";
 
 export default function RegistrationForm() {
   const userNameFieldId = useId();
   const emailFieldId = useId();
   const passwordFieldId = useId();
+  const dispatch = useDispatch()
   const handleSubmit = (values, actions) => {
-    console.log(values);
+    dispatch(registerNewUser(values))
     actions.resetForm();
   };
   const validationSchema = Yup.object().shape({
-    username: Yup.string()
+    name: Yup.string()
       .min(3, "Username should be longer than two signs")
       .max(18, "Username should be shorter  than nineteen  signs")
       .required("Please enter your username"),
@@ -28,7 +30,7 @@ export default function RegistrationForm() {
     <div>
       <Formik
         initialValues={{
-          username: "",
+          name: "",
           email: "",
           password: "",
         }}
@@ -38,10 +40,10 @@ export default function RegistrationForm() {
         <Form className={css.form}>
           <div className={css.flex}>
             <label htmlFor={userNameFieldId}>Username</label>
-            <Field id={userNameFieldId} name="username" />
+            <Field id={userNameFieldId} name="name" />
             <ErrorMessage
               className={css.color}
-              name="username"
+              name="name"
               component="span"
             />
           </div>
