@@ -12,14 +12,14 @@ export default function LoginForm() {
     name: Yup.string()
       .min(3, "Too Short!")
       .max(18, "Too Long!")
-      .required("Name is required!"),
-    phoneNumber: Yup.string()
-      .matches(/^[1-9]\d{1,14}$/, "Invalid phone number!")
+      .required("Name is required to add new contact"),
+    number: Yup.string()
+      .matches(/^[1-9]\d{1,14}$/, "Enter valid phone number!")
       .required("Phone number is required!"),
   });
   const dispatch = useDispatch();
-  const handleSubmit = (newContact, actions) => {
-    dispatch(addContact(newContact));
+  const handleSubmit = (values, actions) => {
+    dispatch(addContact(values));
     actions.resetForm();
   };
   return (
@@ -27,7 +27,7 @@ export default function LoginForm() {
       <Formik
         initialValues={{
           name: "",
-          phoneNumber: "",
+          number: "",
         }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
@@ -35,15 +35,15 @@ export default function LoginForm() {
         <Form className={css.form}>
           <div className={css.flex}>
             <label htmlFor={nameFieldId}>Name</label>
-            <Field id={nameFieldId} name="name" />
+            <Field id={nameFieldId} name="name" value={Field.value}/>
             <ErrorMessage className={css.color} name="name" component="span" />
           </div>
           <div className={css.flex}>
             <label htmlFor={numberFieldId}>Phone number</label>
-            <Field id={numberFieldId} name="phoneNumber" />
+            <Field id={numberFieldId} name="number" value={Field.value}/>
             <ErrorMessage
               className={css.color}
-              name="phoneNumber"
+              name="number"
               component="span"
             />
           </div>
