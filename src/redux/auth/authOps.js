@@ -30,8 +30,26 @@ export const login = createAsyncThunk(
   }
 );
 
-// export const 
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    await axios.post("/users/logout");
+    removeAuthorizationHeader();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
 
+export const fetchUserData = createAsyncThunk(
+  "auth/fetch",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get("/users/current");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 // Mari
 // marimari@GiMailShirt.com
 //12345678
