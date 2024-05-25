@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login, registerNewUser } from "./authOps";
 
-// function handleAuth(state,action)=>{
-//   state.token = action.payload.token;
-//         state.isLoggedIn = true;
-//         state.user.name = action.payload.user.name;
-//         state.user.email = action.payload.user.email;
-// }
+function handleAuth(state, action) {
+  state.token = action.payload.token;
+  state.isLoggedIn = true;
+  state.user.name = action.payload.user.name;
+  state.user.email = action.payload.user.email;
+}
 
 const authSlice = createSlice({
   name: "auth",
@@ -21,18 +21,8 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerNewUser.fulfilled, (state, action) => {
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
-        state.user.name = action.payload.user.name;
-        state.user.email = action.payload.user.email;
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
-        state.user.name = action.payload.user.name;
-        state.user.email = action.payload.user.email;
-      });
+      .addCase(registerNewUser.fulfilled, handleAuth)
+      .addCase(login.fulfilled, handleAuth);
   },
 });
 
