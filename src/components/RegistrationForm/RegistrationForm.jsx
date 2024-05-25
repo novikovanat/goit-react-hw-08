@@ -10,9 +10,9 @@ export default function RegistrationForm() {
   const userNameFieldId = useId();
   const emailFieldId = useId();
   const passwordFieldId = useId();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleSubmit = (values, actions) => {
-    dispatch(registerNewUser(values))
+    dispatch(registerNewUser(values));
     actions.resetForm();
   };
   const validationSchema = Yup.object().shape({
@@ -41,11 +41,7 @@ export default function RegistrationForm() {
           <div className={css.flex}>
             <label htmlFor={userNameFieldId}>Username</label>
             <Field id={userNameFieldId} name="name" />
-            <ErrorMessage
-              className={css.color}
-              name="name"
-              component="span"
-            />
+            <ErrorMessage className={css.color} name="name" component="span" />
           </div>
           <div className={css.flex}>
             <label htmlFor={emailFieldId}>Email</label>

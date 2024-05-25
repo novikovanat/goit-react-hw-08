@@ -15,6 +15,20 @@ export const registerNewUser = createAsyncThunk(
   }
 );
 
+export const login = createAsyncThunk(
+  "auth/login",
+  async (userCreds, thunkAPI) => {
+    try {
+      const response = await axios.post("/users/login", userCreds);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+
+
 
 
 // Mari
@@ -28,3 +42,5 @@ export const registerNewUser = createAsyncThunk(
 
 // newuser
 // la
+
+// FcCm3MrE!qPEWc:
