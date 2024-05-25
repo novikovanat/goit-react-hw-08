@@ -18,8 +18,7 @@ export default function ContactsPage() {
       <ContactForm />
       <SearchBox />
 
-      {/* {item.length > 0 && <ContactList />} */}
-
+      {item.length > 0 && <ContactList />}
       {isLoading && <p>Loading contacts...</p>}
       {error && <p>{error}</p>}
     </div>
