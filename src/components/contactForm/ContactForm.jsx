@@ -35,12 +35,12 @@ export default function LoginForm() {
         <Form className={css.form}>
           <div className={css.flex}>
             <label htmlFor={nameFieldId}>Name</label>
-            <Field id={nameFieldId} name="name" value={Field.value}/>
+            <Field id={nameFieldId} name="name" value={Field.value} />
             <ErrorMessage className={css.color} name="name" component="span" />
           </div>
           <div className={css.flex}>
             <label htmlFor={numberFieldId}>Phone number</label>
-            <Field id={numberFieldId} name="number" value={Field.value}/>
+            <Field id={numberFieldId} name="number" value={Field.value} />
             <ErrorMessage
               className={css.color}
               name="number"
