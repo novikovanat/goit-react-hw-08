@@ -36,3 +36,26 @@ export const deleteContact = createAsyncThunk(
     }
   }
 );
+
+export const updateContact = createAsyncThunk(
+  "contacts/update",
+  async (_, thunkAPI) => {
+    const reduxState = thunkAPI.getState();
+    console.log(reduxState)
+    // const savedToken = reduxState.auth.token;
+    try {
+      // setAuthorizationHeader(savedToken);
+      // const response = await axios.get("/users/current");
+      // return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+  {
+    // condition(_, thunkAPI) {
+    //   const reduxState = thunkAPI.getState();
+    //   const savedToken = reduxState.auth.token;
+    //   return savedToken !== null;
+    // },
+  }
+);

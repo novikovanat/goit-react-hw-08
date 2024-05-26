@@ -33,6 +33,7 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/users/logout");
     removeAuthorizationHeader();
+    return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -59,18 +60,10 @@ export const fetchUserData = createAsyncThunk(
     },
   }
 );
+
 // Mari
 // marimari@GiMailShirt.com
 //12345678
-
-// Noname
-// Noname@mail.com
-// 123456789
-
-// newuser
-// la
-
-// FcCm3MrE!qPEWc:
 
 function setAuthorizationHeader(token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

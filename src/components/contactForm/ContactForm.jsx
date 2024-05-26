@@ -3,17 +3,18 @@ import TextField from "@mui/material/TextField";
 import { useId } from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "@mui/material";
-import { addContact } from "../../redux/contacts/contactsOps";
+import { addContact, updateContact } from "../../redux/contacts/contactsOps";
 import * as Yup from "yup";
 import css from "./ContactForm.module.css";
-import  BasicModal  from "../Modal/Modal";
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
-import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
-
-
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
+import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 
 export default function ContactForm({ isUpdate }) {
-  const Icon = isUpdate ? <ChangeCircleOutlinedIcon/>: <PersonAddAltOutlinedIcon/>
+  const Icon = isUpdate ? (
+    <ChangeCircleOutlinedIcon />
+  ) : (
+    <PersonAddAltOutlinedIcon />
+  );
   const nameFieldId = useId();
   const numberFieldId = useId();
   const validationSchema = Yup.object().shape({
@@ -26,7 +27,7 @@ export default function ContactForm({ isUpdate }) {
       .required("Phone number is required!"),
   });
   const handleSubmit = (values, actions) => {
-    isUpdate? dispatch(addContact(values)):dispatch(addContact(values));
+    isUpdate ? dispatch(updateContact(values)) : dispatch(addContact(values));
     actions.resetForm();
   };
   const formik = useFormik({
@@ -67,9 +68,9 @@ export default function ContactForm({ isUpdate }) {
         margin="normal"
         helperText={formik.touched.number && formik.errors.number}
       />
-        <Button variant="outlined" type="submit" startIcon={Icon}>
-         { isUpdate? "Update contact": "Add contact"}
-        </Button>
+      <Button variant="outlined" type="submit" startIcon={Icon}>
+        {isUpdate ? "Update contact" : "Add contact"}
+      </Button>
     </form>
   );
 }
