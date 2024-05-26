@@ -1,11 +1,19 @@
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useFormik } from "formik";
+import TextField from "@mui/material/TextField";
 import { useId } from "react";
 import { useDispatch } from "react-redux";
+import { Button } from "@mui/material";
 import { addContact } from "../../redux/contacts/contactsOps";
 import * as Yup from "yup";
 import css from "./ContactForm.module.css";
+import  BasicModal  from "../Modal/Modal";
+import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
+import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 
-export default function LoginForm() {
+
+
+export default function ContactForm({ isUpdate }) {
+  const Icon = isUpdate ? <ChangeCircleOutlinedIcon/>: <PersonAddAltOutlinedIcon/>
   const nameFieldId = useId();
   const numberFieldId = useId();
   const validationSchema = Yup.object().shape({
@@ -17,41 +25,51 @@ export default function LoginForm() {
       .matches(/^[1-9]\d{1,14}$/, "Enter valid phone number!")
       .required("Phone number is required!"),
   });
-  const dispatch = useDispatch();
   const handleSubmit = (values, actions) => {
-    dispatch(addContact(values));
+    isUpdate? dispatch(addContact(values)):dispatch(addContact(values));
     actions.resetForm();
   };
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      number: "",
+    },
+    onSubmit: handleSubmit,
+    validationSchema: validationSchema,
+  });
+  const dispatch = useDispatch();
+
   return (
-    <div>
-      <Formik
-        initialValues={{
-          name: "",
-          number: "",
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <Form className={css.form}>
-          <div className={css.flex}>
-            <label htmlFor={nameFieldId}>Name</label>
-            <Field id={nameFieldId} name="name" value={Field.value} />
-            <ErrorMessage className={css.color} name="name" component="span" />
-          </div>
-          <div className={css.flex}>
-            <label htmlFor={numberFieldId}>Phone number</label>
-            <Field id={numberFieldId} name="number" value={Field.value} />
-            <ErrorMessage
-              className={css.color}
-              name="number"
-              component="span"
-            />
-          </div>
-          <button className={css.button} type="submit">
-            Add contact
-          </button>
-        </Form>
-      </Formik>
-    </div>
+    <form onSubmit={formik.handleSubmit} className={css.form}>
+      <TextField
+        id={nameFieldId}
+        // autoFocus={true}
+        name="name"
+        label="name"
+        type="text"
+        value={formik.values.name}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.name && Boolean(formik.errors.name)}
+        margin="normal"
+        helperText={formik.touched.name && formik.errors.name}
+      />
+      <TextField
+        id={numberFieldId}
+        // autoFocus={true}
+        name="number"
+        label="number"
+        type="text"
+        value={formik.values.number}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.number && Boolean(formik.errors.number)}
+        margin="normal"
+        helperText={formik.touched.number && formik.errors.number}
+      />
+        <Button variant="outlined" type="submit" startIcon={Icon}>
+         { isUpdate? "Update contact": "Add contact"}
+        </Button>
+    </form>
   );
 }

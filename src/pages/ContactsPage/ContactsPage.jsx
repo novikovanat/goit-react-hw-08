@@ -15,9 +15,8 @@ export default function ContactsPage() {
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm />
+      <ContactForm isUpdate={false} />
       <SearchBox />
-
       {item.length > 0 && <ContactList />}
       {isLoading && <p>Loading contacts...</p>}
       {error && <p>{error}</p>}
