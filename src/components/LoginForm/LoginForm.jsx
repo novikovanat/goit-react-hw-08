@@ -3,7 +3,8 @@ import { useId } from "react";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import css from "./LoginForm.module.css";
-import Button from "../Button/Button";
+import { Button } from "@mui/material"
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import { login } from "../../redux/auth/authOps";
 
 export default function LoginForm() {
@@ -52,7 +53,13 @@ export default function LoginForm() {
               component="span"
             />
           </div>
-          <Button buttonName="login" buttonType="submit" buttonValue="Log in" />
+          <Button
+            variant="contained"
+            type="submit"
+            startIcon={<LoginOutlinedIcon />}
+          >
+           Log in
+          </Button>
         </Form>
       </Formik>
     </div>
