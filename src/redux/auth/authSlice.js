@@ -33,11 +33,9 @@ const authSlice = createSlice({
         state.isRefreshing = false;
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
-        console.log(
-          "================fetchUserData.fulfilled===================="
-        );
-        console.log(action.payload);
-        console.log("====================================");
+        state.isLoggedIn = true;
+        state.user.name = action.payload.name;
+        state.user.email = action.payload.email;
       });
   },
 });
