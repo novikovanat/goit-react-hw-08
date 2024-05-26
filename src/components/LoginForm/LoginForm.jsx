@@ -1,21 +1,13 @@
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useFormik } from "formik";
+import TextField from "@mui/material/TextField";
 import { useId } from "react";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import css from "./LoginForm.module.css";
-import { Button } from "@mui/material"
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import { login } from "../../redux/auth/authOps";
-
+import css from "./LoginForm.module.css";
+import { Button } from "@mui/material";
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 export default function LoginForm() {
-  // const userNameFieldId = useId();
-  const emailFieldId = useId();
-  const passwordFieldId = useId();
-  const dispatch = useDispatch();
-  const handleSubmit = (values, actions) => {
-    dispatch(login(values));
-    actions.resetForm();
-  };
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required("Please enter your email"),
     password: Yup.string()
@@ -23,45 +15,58 @@ export default function LoginForm() {
       .max(29, "Password  should be shorter than thirty signs")
       .required("Please enter your password"),
   });
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values, actions) => {
+      dispatch(login(values));
+      actions.resetForm();
+    },
+  });
+  const emailFieldId = useId();
+  const passwordFieldId = useId();
+  const dispatch = useDispatch();
   return (
     <div>
-      <Formik
-        initialValues={{
-          email: "",
-          password: "",
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <Form className={css.form}>
-          <div className={css.flex}>
-            <label htmlFor={emailFieldId}>Email</label>
-            <Field id={emailFieldId} name="email" type="email" />
-            <ErrorMessage className={css.color} name="email" component="span" />
-          </div>
-          <div className={css.flex}>
-            <label htmlFor={passwordFieldId}>Password</label>
-            <Field
-              id={passwordFieldId}
-              name="password"
-              type="password"
-              autoComplete="new-password"
-            />
-            <ErrorMessage
-              className={css.color}
-              name="password"
-              component="span"
-            />
-          </div>
-          <Button
-            variant="contained"
-            type="submit"
-            startIcon={<LoginOutlinedIcon />}
-          >
-           Log in
-          </Button>
-        </Form>
-      </Formik>
+      <form onSubmit={formik.handleSubmit} className={css.form}>
+        <TextField
+          id={emailFieldId}
+          // autoFocus={true}
+          name="email"
+          label="Email"
+          type="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          margin="normal"
+          helperText={formik.touched.email && formik.errors.email}
+        />
+        <TextField
+          id={passwordFieldId}
+          name="password"
+          label="Password"
+          type="password"
+          autoComplete= 'new-password'
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          margin="normal"
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        <Button
+          variant="contained"
+          type="submit"
+          startIcon={<LoginOutlinedIcon />}
+        >
+          Log in
+        </Button>
+      </form>
     </div>
   );
 }
